@@ -7,16 +7,35 @@
 import { useState, useMemo } from "react";
 import RecetteCard from "./RecetteCard";
 import FiltreBar from "./FiltreBar";
+import { useRecettesLocales } from "@/hooks/useRecettesLocales";
 
 export default function RecetteGrid({ recettes }) {
+  // Fusionne les recettes statiques avec les recettes créées/modifiées localement
+  // Les recettes locales écrasent les statiques si même slug (= édition)
+  const { recettesLocales } = useRecettesLocales();
   // État des trois filtres
   const [search, setSearch] = useState("");
   const [categorie, setCategorie] = useState("Tout");
   const [difficulte, setDifficulte] = useState("Tout");
 
+  // Recettes fusionnées : statiques + locales (les locales ont priorité)
+  const toutesLesRecettes = useMemo(() => {
+    const locales = Object.values(recettesLocales);
+    const slugsLocaux = new Set(locales.map((r) => r.slug));
+    // Nouvelles recettes locales (slug absent des statiques) ajoutées en tête
+    const nouvellesLocales = locales.filter(
+      (r) => !recettes.some((s) => s.slug === r.slug)
+    );
+    // Recettes statiques, remplacées par leur version locale si elle existe
+    const statiques = recettes.map((r) =>
+      slugsLocaux.has(r.slug) ? recettesLocales[r.slug] : r
+    );
+    return [...nouvellesLocales, ...statiques];
+  }, [recettes, recettesLocales]);
+
   // Calcul des recettes filtrées — recalculé uniquement si les filtres changent
   const recettesFiltrees = useMemo(() => {
-    return recettes.filter((r) => {
+    return toutesLesRecettes.filter((r) => {
       // Filtre recherche textuelle sur nom et description
       const termeLower = search.toLowerCase();
       const matchSearch =
@@ -33,7 +52,7 @@ export default function RecetteGrid({ recettes }) {
 
       return matchSearch && matchCategorie && matchDifficulte;
     });
-  }, [recettes, search, categorie, difficulte]);
+  }, [toutesLesRecettes, search, categorie, difficulte]);
 
   // Réinitialise tous les filtres
   function handleReset() {
@@ -53,7 +72,7 @@ export default function RecetteGrid({ recettes }) {
         setDifficulte={setDifficulte}
         onReset={handleReset}
         count={recettesFiltrees.length}
-        total={recettes.length}
+        total={toutesLesRecettes.length}
       />
 
       {/* État vide */}

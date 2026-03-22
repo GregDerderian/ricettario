@@ -9,7 +9,7 @@ const recettes = [
     temps: 40,
     portions: 4,
     description: "Un risotto crémeux au truffe noire, symbole de la gastronomie italienne d'exception.",
-    image: "https://images.unsplash.com/photo-1673158890854-0f2e77de0dde?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=800&q=80",
     ingredients: [
       "320g de riz Arborio",
       "1 truffe noire (20g)",
