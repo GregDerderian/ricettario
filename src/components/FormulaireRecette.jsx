@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import ImagePicker from "./ImagePicker";
 import { useRecettesLocales } from "@/hooks/useRecettesLocales";
 
+const CLE_STORAGE = "ricettario_recettes";
+
 const categories = ["antipasto", "primo", "secondo", "dolce"];
 const difficultes = ["facile", "moyen", "difficile"];
 
@@ -37,7 +39,7 @@ const valeurVide = {
 
 export default function FormulaireRecette({ recetteInitiale }) {
   const router = useRouter();
-  const { saveRecette } = useRecettesLocales();
+  const { saveRecette, deleteRecette } = useRecettesLocales();
 
   // Pré-remplit le formulaire si on édite une recette existante
   const [form, setForm] = useState(() => {
@@ -51,6 +53,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [confirmerSuppression, setConfirmerSuppression] = useState(false);
   const estEdition = Boolean(recetteInitiale);
 
   function set(champ, valeur) {
@@ -235,20 +238,58 @@ export default function FormulaireRecette({ recetteInitiale }) {
       </div>
 
       {/* Actions */}
-      <div className="flex gap-3 pt-2">
-        <button
-          type="submit"
-          className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-xl transition-colors"
-        >
-          {estEdition ? "Enregistrer les modifications" : "Créer la recette"}
-        </button>
-        <button
-          type="button"
-          onClick={() => router.back()}
-          className="px-6 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-medium rounded-xl transition-colors"
-        >
-          Annuler
-        </button>
+      <div className="flex items-center justify-between pt-2">
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-xl transition-colors"
+          >
+            {estEdition ? "Enregistrer les modifications" : "Créer la recette"}
+          </button>
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="px-6 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-medium rounded-xl transition-colors"
+          >
+            Annuler
+          </button>
+        </div>
+
+        {/* Bouton supprimer — uniquement en mode édition */}
+        {estEdition && (
+          <div className="flex items-center gap-3">
+            {confirmerSuppression ? (
+              <>
+                <span className="text-sm text-stone-500">Confirmer ?</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    deleteRecette(recetteInitiale.slug);
+                    router.push("/");
+                  }}
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-xl transition-colors"
+                >
+                  Oui, supprimer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConfirmerSuppression(false)}
+                  className="text-sm text-stone-400 hover:text-stone-600 transition-colors"
+                >
+                  Annuler
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setConfirmerSuppression(true)}
+                className="px-4 py-2 border border-red-200 text-red-500 hover:bg-red-50 text-sm font-medium rounded-xl transition-colors"
+              >
+                Supprimer
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </form>
   );

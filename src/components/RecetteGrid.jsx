@@ -12,26 +12,27 @@ import { useRecettesLocales } from "@/hooks/useRecettesLocales";
 export default function RecetteGrid({ recettes }) {
   // Fusionne les recettes statiques avec les recettes créées/modifiées localement
   // Les recettes locales écrasent les statiques si même slug (= édition)
-  const { recettesLocales } = useRecettesLocales();
+  const { recettesLocales, slugsSupprimes } = useRecettesLocales();
   // État des trois filtres
   const [search, setSearch] = useState("");
   const [categorie, setCategorie] = useState("Tout");
   const [difficulte, setDifficulte] = useState("Tout");
 
-  // Recettes fusionnées : statiques + locales (les locales ont priorité)
+  // Recettes fusionnées : statiques + locales (locales prioritaires), sans les supprimées
   const toutesLesRecettes = useMemo(() => {
-    const locales = Object.values(recettesLocales);
+    const supprimesSet = new Set(slugsSupprimes);
+    const locales = Object.values(recettesLocales).filter((r) => !supprimesSet.has(r.slug));
     const slugsLocaux = new Set(locales.map((r) => r.slug));
     // Nouvelles recettes locales (slug absent des statiques) ajoutées en tête
     const nouvellesLocales = locales.filter(
       (r) => !recettes.some((s) => s.slug === r.slug)
     );
-    // Recettes statiques, remplacées par leur version locale si elle existe
-    const statiques = recettes.map((r) =>
-      slugsLocaux.has(r.slug) ? recettesLocales[r.slug] : r
-    );
+    // Recettes statiques : exclure les supprimées, remplacer par version locale si modifiée
+    const statiques = recettes
+      .filter((r) => !supprimesSet.has(r.slug))
+      .map((r) => (slugsLocaux.has(r.slug) ? recettesLocales[r.slug] : r));
     return [...nouvellesLocales, ...statiques];
-  }, [recettes, recettesLocales]);
+  }, [recettes, recettesLocales, slugsSupprimes]);
 
   // Calcul des recettes filtrées — recalculé uniquement si les filtres changent
   const recettesFiltrees = useMemo(() => {
