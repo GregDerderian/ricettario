@@ -107,14 +107,14 @@ export default function FormulaireRecette({ recetteInitiale }) {
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Image */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-2">Image</label>
+        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">Image</label>
         <ImagePicker value={form.image} onChange={(url) => set("image", url)} />
         {errors.image && <p className="text-xs text-red-500 mt-1">{errors.image}</p>}
       </div>
 
       {/* Nom */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
           Nom de la recette
         </label>
         <input
@@ -122,14 +122,14 @@ export default function FormulaireRecette({ recetteInitiale }) {
           value={form.nom}
           onChange={(e) => set("nom", e.target.value)}
           placeholder="Ex : Risotto al Parmigiano"
-          className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
         />
         {errors.nom && <p className="text-xs text-red-500 mt-1">{errors.nom}</p>}
       </div>
 
       {/* Description */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
           Description courte
         </label>
         <textarea
@@ -137,7 +137,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
           onChange={(e) => set("description", e.target.value)}
           rows={2}
           placeholder="Une phrase qui donne envie…"
-          className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+          className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
         />
         {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description}</p>}
       </div>
@@ -145,13 +145,13 @@ export default function FormulaireRecette({ recetteInitiale }) {
       {/* Catégorie + Difficulté + Temps + Portions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div>
-          <label className="block text-xs font-medium text-stone-500 mb-1 uppercase tracking-wide">
+          <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wide">
             Catégorie
           </label>
           <select
             value={form.categorie}
             onChange={(e) => set("categorie", e.target.value)}
-            className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
+            className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
           >
             {categories.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -160,13 +160,13 @@ export default function FormulaireRecette({ recetteInitiale }) {
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-stone-500 mb-1 uppercase tracking-wide">
+          <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wide">
             Difficulté
           </label>
           <select
             value={form.difficulte}
             onChange={(e) => set("difficulte", e.target.value)}
-            className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
+            className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 capitalize"
           >
             {difficultes.map((d) => (
               <option key={d} value={d}>{d}</option>
@@ -175,7 +175,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-stone-500 mb-1 uppercase tracking-wide">
+          <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wide">
             Temps (min)
           </label>
           <input
@@ -184,13 +184,13 @@ export default function FormulaireRecette({ recetteInitiale }) {
             value={form.temps}
             onChange={(e) => set("temps", e.target.value)}
             placeholder="30"
-            className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.temps && <p className="text-xs text-red-500 mt-1">{errors.temps}</p>}
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-stone-500 mb-1 uppercase tracking-wide">
+          <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1 uppercase tracking-wide">
             Portions
           </label>
           <input
@@ -199,7 +199,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
             value={form.portions}
             onChange={(e) => set("portions", e.target.value)}
             placeholder="4"
-            className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
           {errors.portions && <p className="text-xs text-red-500 mt-1">{errors.portions}</p>}
         </div>
@@ -207,7 +207,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
 
       {/* Ingrédients */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
           Ingrédients
           <span className="text-stone-400 font-normal ml-2">— un par ligne</span>
         </label>
@@ -216,14 +216,14 @@ export default function FormulaireRecette({ recetteInitiale }) {
           onChange={(e) => set("ingredients", e.target.value)}
           rows={6}
           placeholder={"200g de riz Arborio\n1L de bouillon\n60g de parmesan…"}
-          className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
+          className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
         />
         {errors.ingredients && <p className="text-xs text-red-500 mt-1">{errors.ingredients}</p>}
       </div>
 
       {/* Étapes */}
       <div>
-        <label className="block text-sm font-medium text-stone-700 mb-1">
+        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1">
           Étapes de préparation
           <span className="text-stone-400 font-normal ml-2">— une par ligne</span>
         </label>
@@ -232,7 +232,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
           onChange={(e) => set("etapes", e.target.value)}
           rows={6}
           placeholder={"Faire revenir l'oignon dans l'huile.\nAjouter le riz et nacrer 2 minutes.\n…"}
-          className="w-full px-3 py-2 border border-stone-200 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
+          className="w-full px-3 py-2 border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-green-500 resize-y"
         />
         {errors.etapes && <p className="text-xs text-red-500 mt-1">{errors.etapes}</p>}
       </div>
@@ -249,7 +249,7 @@ export default function FormulaireRecette({ recetteInitiale }) {
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-6 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-sm font-medium rounded-xl transition-colors"
+            className="px-6 py-2.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-300 text-sm font-medium rounded-xl transition-colors"
           >
             Annuler
           </button>

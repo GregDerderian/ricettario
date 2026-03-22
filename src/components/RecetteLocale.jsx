@@ -44,19 +44,18 @@ export default function RecetteLocale({ slug, recetteStatique }) {
   // Chargement initial (recette locale sans fallback statique)
   if (recette === undefined) {
     return (
-      <main className="min-h-screen bg-stone-50 flex items-center justify-center">
+      <main className="min-h-screen bg-stone-50 dark:bg-stone-950 flex items-center justify-center">
         <p className="text-stone-400 text-sm">Chargement…</p>
       </main>
     );
   }
 
-  // Introuvable ni statique ni locale
   if (recette === null) {
     return (
-      <main className="min-h-screen bg-stone-50 flex flex-col items-center justify-center gap-4">
+      <main className="min-h-screen bg-stone-50 dark:bg-stone-950 flex flex-col items-center justify-center gap-4">
         <p className="text-2xl">🍽</p>
-        <p className="text-stone-600 font-medium">Recette introuvable</p>
-        <Link href="/" className="text-sm text-green-700 hover:underline">
+        <p className="text-stone-600 dark:text-stone-400 font-medium">Recette introuvable</p>
+        <Link href="/" className="text-sm text-green-700 dark:text-green-400 hover:underline">
           Retour aux recettes
         </Link>
       </main>
@@ -67,12 +66,12 @@ export default function RecetteLocale({ slug, recetteStatique }) {
     recette;
 
   return (
-    <main className="min-h-screen bg-stone-50">
-      <div className="bg-white border-b border-stone-200">
+    <main className="min-h-screen bg-stone-50 dark:bg-stone-950">
+      <div className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
         <div className="max-w-3xl mx-auto px-4 py-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-green-700 hover:text-green-900 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -97,26 +96,26 @@ export default function RecetteLocale({ slug, recetteStatique }) {
         </div>
 
         <header className="mb-8">
-          <h1 className="text-4xl font-bold text-stone-900 mb-3">{nom}</h1>
-          <p className="text-stone-500 text-lg leading-relaxed">{description}</p>
+          <h1 className="text-4xl font-bold text-stone-900 dark:text-stone-100 mb-3">{nom}</h1>
+          <p className="text-stone-500 dark:text-stone-400 text-lg leading-relaxed">{description}</p>
         </header>
 
         <div className="flex flex-wrap gap-3 mb-10">
-          <span className="bg-stone-100 text-stone-700 text-sm px-3 py-1.5 rounded-full capitalize">{categorie}</span>
+          <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-sm px-3 py-1.5 rounded-full capitalize">{categorie}</span>
           <span className={`text-sm px-3 py-1.5 rounded-full capitalize font-medium ${couleurDifficulte[difficulte]}`}>{difficulte}</span>
-          <span className="bg-stone-100 text-stone-700 text-sm px-3 py-1.5 rounded-full">⏱ {temps} min</span>
-          <span className="bg-stone-100 text-stone-700 text-sm px-3 py-1.5 rounded-full">🍽 {portions} portions</span>
+          <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-sm px-3 py-1.5 rounded-full">⏱ {temps} min</span>
+          <span className="bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-sm px-3 py-1.5 rounded-full">🍽 {portions} portions</span>
         </div>
 
         <div className="grid sm:grid-cols-2 gap-10">
           <section>
-            <h2 className="text-xl font-semibold text-stone-800 mb-4 flex items-center gap-2">
+            <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-200 mb-4 flex items-center gap-2">
               <span className="w-1 h-5 bg-green-500 rounded-full inline-block" />
               Ingrédients
             </h2>
             <ul className="space-y-2">
               {ingredients.map((ing, i) => (
-                <li key={i} className="flex items-start gap-2 text-stone-600 text-sm">
+                <li key={i} className="flex items-start gap-2 text-stone-600 dark:text-stone-400 text-sm">
                   <span className="text-green-500 mt-0.5 font-bold">•</span>
                   {ing}
                 </li>
@@ -125,14 +124,14 @@ export default function RecetteLocale({ slug, recetteStatique }) {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-stone-800 mb-4 flex items-center gap-2">
+            <h2 className="text-xl font-semibold text-stone-800 dark:text-stone-200 mb-4 flex items-center gap-2">
               <span className="w-1 h-5 bg-green-500 rounded-full inline-block" />
               Préparation
             </h2>
             <ol className="space-y-4">
               {etapes.map((etape, i) => (
-                <li key={i} className="flex gap-3 text-stone-600 text-sm leading-relaxed">
-                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center mt-0.5">
+                <li key={i} className="flex gap-3 text-stone-600 dark:text-stone-400 text-sm leading-relaxed">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 text-xs font-bold flex items-center justify-center mt-0.5">
                     {i + 1}
                   </span>
                   {etape}
