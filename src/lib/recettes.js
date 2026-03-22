@@ -344,3 +344,13 @@ const recettes = [
 ];
 
 export default recettes;
+
+// Retourne une recette par son slug, ou null si introuvable
+export function getRecetteBySlug(slug) {
+  return recettes.find((r) => r.slug === slug) ?? null;
+}
+
+// Retourne tous les slugs (utilisé par generateStaticParams)
+export function getAllSlugs() {
+  return recettes.map((r) => r.slug);
+}
